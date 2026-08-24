@@ -212,7 +212,7 @@ def get_static_response(query):
     # Hours
     if any(word in q for word in ["hour", "time", "open", "close", "when"]):
         hours_text = "\n".join([f"- {day}: {time}" for day, time in business_info["hours"].items()])
-        return f"🕐 **Business Hours:**\n\n{hours_text}\n\nWe are closed on public holidays."
+        return f"🕐 **Business Hours:**\n\n{hours_text}"
     
     # Fashion / Abaya / Sleeves / Pins / Visor
     if any(word in q for word in ["fashion", "abaya", "₦5000", "5000", "₦7000", "7000", "thrift", "sleeve", "hand", "₦800", "800", "pin", "visor", "hat", "summer"]):
