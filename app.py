@@ -32,7 +32,7 @@ business_info = {
         "Saturday-Sunday": "8:00 AM – 6:00 PM"
     },
     "offerings": {
-        "fashion": "Modest fashion, thrift abayas (₦5,000), thick hand sleeves (₦800), fashion pins, summer hats, visor hats, electronics, mobile accessories, and home appliances.",
+        "fashion": "Modest fashion, thrift abayas (₦7,000), thick hand sleeves (₦800), fashion pins, and visor hats.",
         "electronics": "Quality electronics and gadgets.",
         "tailoring": "Custom garment construction and fashion design (Nusaybah Power and Stitch).",
         "home_appliances": "Home appliances and household gadgets.",
@@ -150,6 +150,44 @@ st.markdown(f"""
     .brand-footer strong {{
         color: {BRAND_PRIMARY};
     }}
+
+    /* Responsive adjustments for mobile */
+    @media only screen and (max-width: 768px) {{
+        .brand-header {{
+            padding: 1.2rem 0.8rem 1rem 0.8rem;
+            border-radius: 10px;
+        }}
+        .brand-name {{
+            font-size: 1.6rem;
+            letter-spacing: 1.5px;
+        }}
+        .brand-tagline {{
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+        }}
+        .brand-categories {{
+            font-size: 0.8rem;
+        }}
+        .brand-phone {{
+            display: block;
+            margin: 0.6rem auto 0 auto;
+            padding: 0.25rem 1rem;
+            font-size: 1rem;
+        }}
+        .response-box {{
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }}
+        .stButton > button {{
+            font-size: 0.95rem;
+            padding: 0.6rem 0.8rem;
+        }}
+        .block-container {{
+            padding-left: 0.8rem !important;
+            padding-right: 0.8rem !important;
+        }}
+    }}
     </style>
 """, unsafe_allow_html=True)
 
@@ -212,10 +250,10 @@ def get_static_response(query):
     # Hours
     if any(word in q for word in ["hour", "time", "open", "close", "when"]):
         hours_text = "\n".join([f"- {day}: {time}" for day, time in business_info["hours"].items()])
-        return f"🕐 **Business Hours:**\n\n{hours_text}"
+        return f"🕐 **Business Hours:**\n\n{hours_text}\n\nWe are closed on public holidays."
     
     # Fashion / Abaya / Sleeves / Pins / Visor
-    if any(word in q for word in ["fashion", "abaya", "₦5000", "5000", "₦7000", "7000", "thrift", "sleeve", "hand", "₦800", "800", "pin", "visor", "hat", "summer"]):
+    if any(word in q for word in ["fashion", "abaya", "₦7000", "7000", "thrift", "sleeve", "hand", "₦800", "800", "pin", "visor", "hat"]):
         return f"👗 **Fashion & Accessories:**\n\n{business_info['offerings']['fashion']}\n\nVisit our store or contact us via WhatsApp to see current stock."
     
     # Electronics
