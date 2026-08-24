@@ -32,7 +32,7 @@ business_info = {
         "Saturday-Sunday": "8:00 AM – 6:00 PM"
     },
     "offerings": {
-        "fashion": "Modest fashion, thrift abayas (₦7,000), thick hand sleeves (₦800), fashion pins, and visor hats.",
+        "fashion": "Modest fashion, thrift abayas (₦5,000), thick hand sleeves (₦800), fashion pins, summer hats, visor hats, electronics, mobile accessories, and home appliances.",
         "electronics": "Quality electronics and gadgets.",
         "tailoring": "Custom garment construction and fashion design (Nusaybah Power and Stitch).",
         "home_appliances": "Home appliances and household gadgets.",
@@ -215,7 +215,7 @@ def get_static_response(query):
         return f"🕐 **Business Hours:**\n\n{hours_text}\n\nWe are closed on public holidays."
     
     # Fashion / Abaya / Sleeves / Pins / Visor
-    if any(word in q for word in ["fashion", "abaya", "₦7000", "7000", "thrift", "sleeve", "hand", "₦800", "800", "pin", "visor", "hat"]):
+    if any(word in q for word in ["fashion", "abaya", "₦5000", "5000", "₦7000", "7000", "thrift", "sleeve", "hand", "₦800", "800", "pin", "visor", "hat", "summer"]):
         return f"👗 **Fashion & Accessories:**\n\n{business_info['offerings']['fashion']}\n\nVisit our store or contact us via WhatsApp to see current stock."
     
     # Electronics
