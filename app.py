@@ -54,11 +54,15 @@ client = OpenAI(api_key=api_key) if api_key else None
 # ------------------------------------------------------------------
 st.markdown(f"""
     <style>
-    /* Main container styling */
-    .main {{
-        background-color: {BRAND_LIGHT_BG};
+    /* Layout container adjustments */
+    .block-container {{
+        max-width: 880px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
     }}
-    
+
     /* Brand Header */
     .brand-header {{
         background: {BRAND_PRIMARY};
@@ -70,122 +74,153 @@ st.markdown(f"""
     }}
     .brand-name {{
         color: {BRAND_WHITE};
-        font-size: 2.8rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         margin: 0;
-        line-height: 1.2;
+        line-height: 1.15;
     }}
     .brand-tagline {{
         color: {BRAND_ACCENT};
-        font-size: 1.1rem;
-        font-weight: 500;
-        letter-spacing: 5px;
-        margin-top: 0.2rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        margin-top: 0.25rem;
     }}
     .brand-categories {{
-        color: {BRAND_WHITE};
-        font-size: 0.9rem;
+        color: rgba(255,255,255,0.9);
+        font-size: 0.85rem;
         font-weight: 300;
-        letter-spacing: 2px;
-        margin-top: 0.8rem;
-        opacity: 0.9;
+        letter-spacing: 1.8px;
+        margin-top: 0.6rem;
+        opacity: 0.95;
     }}
     .brand-phone {{
-        color: {BRAND_WHITE};
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-top: 0.5rem;
-        background: {BRAND_ACCENT};
         color: {BRAND_PRIMARY};
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-top: 0.6rem;
+        background: {BRAND_ACCENT};
         display: inline-block;
-        padding: 0.2rem 1.5rem;
-        border-radius: 20px;
+        padding: 0.35rem 1rem;
+        border-radius: 999px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     }}
-    
+
     /* Quick buttons styling */
     .stButton > button {{
         background-color: {BRAND_PRIMARY};
         color: {BRAND_WHITE};
         border: 1px solid {BRAND_PRIMARY};
-        border-radius: 8px;
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
+        border-radius: 10px;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: all 0.18s ease;
         width: 100%;
+        box-shadow: 0 4px 10px rgba(11,26,58,0.06);
     }}
     .stButton > button:hover {{
         background-color: {BRAND_ACCENT};
         color: {BRAND_PRIMARY};
         border-color: {BRAND_ACCENT};
-        transform: scale(1.02);
+        transform: translateY(-1px);
     }}
-    
+
+    /* Make the 4-column layout tighter on desktop but readable on mobile */
+    .stColumns {{
+        gap: 0.9rem !important;
+    }}
+
     /* Response box */
     .response-box {{
         background-color: {BRAND_WHITE};
-        padding: 1.8rem;
+        padding: 1.6rem;
         border-radius: 12px;
-        margin: 1.5rem 0;
+        margin: 1.25rem 0;
         border-left: 6px solid {BRAND_ACCENT};
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        box-shadow: 0 6px 18px rgba(11,26,58,0.06);
         color: {BRAND_PRIMARY};
         font-size: 1rem;
         line-height: 1.6;
     }}
-    .response-box strong {{
+    .response-box h4, .response-box strong {{
         color: {BRAND_PRIMARY};
     }}
-    
+
     /* Footer */
     .brand-footer {{
         margin-top: 3rem;
         padding-top: 1.5rem;
-        border-top: 2px solid #E0E0E0;
+        border-top: 1px solid rgba(0,0,0,0.06);
         text-align: center;
         color: #6B7280;
-        font-size: 0.85rem;
-    }}
-    .brand-footer strong {{
-        color: {BRAND_PRIMARY};
+        font-size: 0.9rem;
     }}
 
-    /* Responsive adjustments for mobile */
-    @media only screen and (max-width: 768px) {{
+    /* ----- MOBILE / SMALL SCREENS ----- */
+    @media only screen and (max-width: 600px) {{
+        .block-container {{
+            padding-left: 0.9rem !important;
+            padding-right: 0.9rem !important;
+        }}
+
         .brand-header {{
-            padding: 1.2rem 0.8rem 1rem 0.8rem;
+            padding: 1.1rem 0.9rem 0.9rem 0.9rem;
             border-radius: 10px;
         }}
         .brand-name {{
-            font-size: 1.6rem;
-            letter-spacing: 1.5px;
+            font-size: 1.4rem !important;
+            letter-spacing: 1px !important;
         }}
         .brand-tagline {{
-            font-size: 0.95rem;
-            letter-spacing: 2px;
+            font-size: 0.85rem !important;
+            letter-spacing: 1.5px !important;
         }}
         .brand-categories {{
-            font-size: 0.8rem;
+            display: none; /* keep header compact on phones */
         }}
         .brand-phone {{
-            display: block;
-            margin: 0.6rem auto 0 auto;
-            padding: 0.25rem 1rem;
-            font-size: 1rem;
+            display: block !important;
+            margin: 0.5rem auto 0 auto !important;
+            padding: 0.45rem 0.9rem !important;
+            font-size: 0.95rem !important;
         }}
-        .response-box {{
-            padding: 1rem;
-            margin: 1rem 0;
-            font-size: 0.95rem;
+
+        /* Stack quick buttons vertically with comfortable spacing */
+        .stColumns, .stColumns > div {{
+            display: block !important;
+            width: 100% !important;
+            margin-bottom: 0.7rem !important;
         }}
         .stButton > button {{
-            font-size: 0.95rem;
-            padding: 0.6rem 0.8rem;
+            width: 100% !important;
+            padding: 0.9rem 0.9rem !important;
+            font-size: 1rem !important;
+            border-radius: 12px !important;
         }}
-        .block-container {{
-            padding-left: 0.8rem !important;
-            padding-right: 0.8rem !important;
+
+        /* Response card becomes full-width with a subtle top accent */
+        .response-box {{
+            padding: 1rem !important;
+            margin: 0.8rem 0 !important;
+            border-left: none !important;
+            border-top: 4px solid {BRAND_ACCENT} !important;
+            border-radius: 8px !important;
+            box-shadow: 0 6px 20px rgba(11,26,58,0.06) !important;
+        }}
+
+        /* Improve readability for inputs */
+        .stTextInput > div > div > input {{
+            font-size: 1rem !important;
+            padding: 0.9rem !important;
+            border-radius: 10px !important;
+        }}
+
+        /* Footer smaller */
+        .brand-footer {{
+            font-size: 0.82rem !important;
+            padding-bottom: 1.1rem !important;
         }}
     }}
     </style>
@@ -250,7 +285,7 @@ def get_static_response(query):
     # Hours
     if any(word in q for word in ["hour", "time", "open", "close", "when"]):
         hours_text = "\n".join([f"- {day}: {time}" for day, time in business_info["hours"].items()])
-        return f"🕐 **Business Hours:**\n\n{hours_text}\n\nWe are closed on public holidays."
+        return f"🕐 **Business Hours:**\n\n{hours_text}"
     
     # Fashion / Abaya / Sleeves / Pins / Visor
     if any(word in q for word in ["fashion", "abaya", "₦7000", "7000", "thrift", "sleeve", "hand", "₦800", "800", "pin", "visor", "hat"]):
@@ -306,7 +341,8 @@ Here is our business information:
 - Facebook: {business_info['social_media']['facebook']}
 - Instagram: {business_info['social_media']['instagram']}
 
-Answer questions helpfully, concisely, and professionally. If you don't know something, say so and offer to connect the user with our team at {business_info['phone']}."""
+Answer questions helpfully, concisely, and professionally. If you don't know something, say so and offer to connect the user with our team at {business_info['phone']}.
+"""
                     
                     completion = client.chat.completions.create(
                         model="gpt-4",
